@@ -6,7 +6,7 @@ import Home from './components/Home';
 function App() {
   return (
     <Router>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="App">
         <Routes>
           <Route exact path="/" element={<Home />} />
