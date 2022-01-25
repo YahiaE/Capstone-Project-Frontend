@@ -2,40 +2,10 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin:0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 html {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -43,9 +13,54 @@ html {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #131516;
+  
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+a:link {
+  text-decoration: none;
+  color:black;
 }
+
+a:visited {
+  text-decoration: none;
+  color:black;
+}
+
+a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.links{
+  margin: 0.5% 1% 0% 0.1%; 
+  font-size: 24px;
+  font-weight: bolder;
+  
+}
+
+.nav_bar{
+  background-color: rgb(132, 214, 201);
+  display: flex;
+  position:relative;
+}
+
+.logo_img  {
+ width: 2.5%;
+ margin-right: 2%;
+ margin-left: 1%;
+ position: absolute;
+ background: rgb(132, 214, 201);
+}
+
+.logo_img:hover {
+  opacity:0;
+}
+
+.active {
+ width: 2.53%;
+ margin-right: 2%;
+ margin-left: 1%;
+}
+
+
