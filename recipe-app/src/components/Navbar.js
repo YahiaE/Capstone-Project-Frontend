@@ -11,11 +11,11 @@ export default function Navbar() {
         <img src={logo} alt="logo" className='logo_img' onClick={()=> {navigate("/")}} />
         <img src={logoHover} alt="logo" className='active' onClick={()=> {navigate("/")}} /> 
   
-        <Link to="/campuses" className="links">
+        <Link to="/allrecipes" className="links">
           All Recipes
         </Link>
   
-        <Link to="/students" className="links">
+        <Link to="/createrecipes" className="links">
           Create Recipes
         </Link>
   
