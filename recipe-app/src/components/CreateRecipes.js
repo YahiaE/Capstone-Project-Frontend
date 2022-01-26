@@ -3,6 +3,8 @@ import { useState } from "react/cjs/react.development"
 import Navbar from "./Navbar"
 import axios from "axios"
 import AsyncSelect from "react-select/async";
+import ListofIngredients from "./ListofIngredients";
+
 
 export default function CreateRecipes() {
     //search field state
@@ -62,8 +64,9 @@ export default function CreateRecipes() {
         if (ingredientID !== null) {
             const data = await axios.get(`https://api.spoonacular.com/food/ingredients/${ingredientID}/information?apiKey=${apiKey}&amount=${amount}`)
             let obj = {
-                name: query,
-                calories: data.data.nutrition.nutrients[17].amount,
+                ingredient: query,
+                quantity:amount
+                // calories: data.data.nutrition.nutrients[17].amount, 
             }
             setUserIngredientList(prev => prev.concat(obj))
         }
@@ -74,7 +77,7 @@ export default function CreateRecipes() {
 
         setAmount(e.target[1].value)
         e.preventDefault()
-        console.log(e.target[0].value)
+        console.log(e.target[0])
         e.target[1].value = ""
         setChange(prev => !prev)
 
@@ -86,23 +89,32 @@ export default function CreateRecipes() {
             <Navbar />
             <div className="wrapperForm">
                 <form className="myForm">
-                    <div>
+                    <div className="input_div">
                         <label className="name_txt">Name: </label>
                         <input type="text" name="name"></input>
                     </div>
-                    <div>
+                    <div className="input_div">
                         <label className="description_text">Description: </label>
-                        <input type="text" name="description"></input>
+                        <input className="description_box" type="text" name="description"></input>
                     </div>
-                    <div>
+                    <div className="input_div">
                         <label>Diffuculty Level: </label>
-                        <input type="text" name="level"></input>
+                        <input type="text" name="level_of_diff"></input>
+                    </div>
+                    <div className="input_div">
+                        <label>Time: </label>
+                        <input type="text" name="time"></input>
+                    </div>
+                    <div className="input_div">
+                        <label>Steps: </label>
+                        <input type="text" name="steps"></input>
                     </div>
                     <div>
                         <input className="submitBtn" type="submit" value="Submit"></input>
                     </div>
                 </form>
                 <form className="ingredients_input" onSubmit={submitHandler}>
+                    <legend>here</legend>
                     <div>
                         <label className="ingredients">Ingredients: </label>
                         {/* <input type="text" name="ingredients" onChange={handleSearch}></input> */}
@@ -116,7 +128,13 @@ export default function CreateRecipes() {
                     <label className="quanLbl">Quantity: </label>
                     <input className="quanInpt" type="number" min={0} />
                     <button type="submit" value="Submit">Add</button>
-                </form>
+                    <div>
+
+                        <ListofIngredients data = {userIngredientList} />
+
+                    </div>
+                        
+                </form>              
             </div>
         </div>
     )
