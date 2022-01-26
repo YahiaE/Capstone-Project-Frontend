@@ -77,20 +77,32 @@ export default function CreateRecipes() {
 
         setAmount(e.target[1].value)
         e.preventDefault()
-        console.log(e.target[0])
+        console.log(e.target[1].value)
         e.target[1].value = ""
         setChange(prev => !prev)
 
     }
     console.log(userIngredientList)
 
+    function recipeSubmit(e){
+        e.preventDefault()
+        console.log(e.target[4])
+        let obj = {
+            name: e.target[0].value,
+            description: e.target[1].value ,
+            level_of_diff: e.target[2].value ,
+            time: e.target[3].value,
+            steps: e.target[4].value ,
+        }
+    }
+
     return (
         <div>
             <Navbar />
             <div className="wrapperForm">
-                <form className="myForm">
+                <form className="myForm" onSubmit={recipeSubmit}>
                     <div className="input_div">
-                        <label className="name_txt">Name: </label>
+                        <label className="name_txt">Recipe Name: </label>
                         <input type="text" name="name"></input>
                     </div>
                     <div className="input_div">
@@ -109,7 +121,7 @@ export default function CreateRecipes() {
                         <label>Steps: </label>
                         <input type="text" name="steps"></input>
                     </div>
-                    <div>
+                    <div className="input_div">
                         <input className="submitBtn" type="submit" value="Submit"></input>
                     </div>
                 </form>
