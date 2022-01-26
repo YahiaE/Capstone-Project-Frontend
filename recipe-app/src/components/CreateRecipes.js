@@ -8,7 +8,7 @@ export default function CreateRecipes() {
     //search field state
     const [searchField, setSearchField] = useState("")
     //requested list from api state
-    const [ingredientsList, setIngredientsList] = useState(null)
+    const [ingredientsList, setIngredientsList] = useState([])
     //Added ingredients state
     const [addedList, setAddedList] = useState({})
     //sets string value of the query
@@ -21,18 +21,20 @@ export default function CreateRecipes() {
     const [amount, setAmount] = useState()
     //an array of objects that contains the ingredients the user makes
     const [userIngredientList, setUserIngredientList] = useState([])
-    //calories
-    const [calories, setCalories] = useState(null)
     //recipe state
     const [recipe, setRecipe] = useState()
+    //change state
+    const [change, setChange] = useState(false)
 
     //apikey
-    const apiKey = '135105a81ad44fc89fc31589dcff5303'
+    const apiKey = 'fed50daa930847a1a3cf282ef28c9f3b'
     //API Keys
     //0ff1d546021945128788f803cac47584
     //dd323d58462c4007843ea152dc7fee30
     //6693ceb5d7454ecca429359308d788ed
     //135105a81ad44fc89fc31589dcff5303
+    //084ccfa492e6484e8e1b6294d9c7bbb4
+    //fed50daa930847a1a3cf282ef28c9f3b
 
     //returns to AsyncSelect for the dropdown bar ingredient search
     const loadOptions = async () => {
@@ -40,77 +42,43 @@ export default function CreateRecipes() {
     }
 
     //This fetches the api for the name of the ingredient
-    useEffect(() => {
-        const getIngredients = async () => {
-            if (searchField !== "") {
-                const data = await axios.get(`https://api.spoonacular.com/food/ingredients/autocomplete?apiKey=${apiKey}&query=${searchField}&number=5`)
-                //console.log(data)
-                setIngredientsList(data.data)
-            }
+    useEffect(async () => {
+        if (searchField !== "") {
+            const data = await axios.get(`https://api.spoonacular.com/food/ingredients/autocomplete?apiKey=${apiKey}&query=${searchField}&number=5`)
+            setIngredientsList(data.data)
         }
-        getIngredients()
     }, [searchField]);
 
     //This fetches the api for the ID of the ingredient
-    useEffect(() => {
-        const setQueryId = async () => {
-            if (query !== "") {
-                const data = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${apiKey}&query=${query}`)
-                console.log(data)
-                console.log(data.data.results[0].id)
-                setIngredientID(data.data.results[0].id)
-            }
+    useEffect(async () => {
+        if (query !== "") {
+            const data = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${apiKey}&query=${query}`)
+            setIngredientID(data.data.results[0].id)
         }
-        setQueryId()
     }, [query])
 
     //fetches the api for the nutritional information
-    useEffect(() => {
-        const getIngredientInfo = async () => {
-            if (ingredientID !== null) {
-                const data = await axios.get(`https://api.spoonacular.com/food/ingredients/${ingredientID}/information?apiKey=${apiKey}&amount=${amount}`)
-                console.log(data)
-                setIngredientNutrition(data)
+    useEffect(async () => {
+        if (ingredientID !== null) {
+            const data = await axios.get(`https://api.spoonacular.com/food/ingredients/${ingredientID}/information?apiKey=${apiKey}&amount=${amount}`)
+            let obj = {
+                name: query,
+                calories: data.data.nutrition.nutrients[17].amount,
             }
+            setUserIngredientList(prev => prev.concat(obj))
         }
-        getIngredientInfo()
-    }, [query,amount])
-
-    //logging nutrition to make sure its there
-    useEffect(() => {
-        console.log(ingredientNutrition)
-        if (ingredientNutrition !== null) {
-            setCalories(ingredientNutrition.data.nutrition.nutrients[17].amount)
-        }
-    }, [ingredientNutrition])
-
-    //loggin calories
-    useEffect(() => {
-        console.log(calories)
-    }, [calories])
+    }, [change])
 
     //submit handler for add button
     function submitHandler(e) {
+
+        setAmount(e.target[1].value)
         e.preventDefault()
-        let obj = {
-            name: query,
-            calories: calories,
-        }
-        
-        let arr = userIngredientList.concat(obj)
-        setUserIngredientList(arr)
-        const ingredientForm = document.querySelector(".ingredients_input")
-        
-        ingredientForm.reset();
-        
-    }
+        console.log(e.target[0].value)
+        e.target[1].value = ""
+        setChange(prev => !prev)
 
-    //setting amount everything it is changed
-    function handleNumber(event){
-        setAmount(event.target.value)
     }
-    console.log(amount)
-
     console.log(userIngredientList)
 
     return (
@@ -142,13 +110,11 @@ export default function CreateRecipes() {
                             loadOptions={loadOptions}
                             onInputChange={(value) => setSearchField(value)}
                             onChange={(value) => setQuery(value.name)}
-                            // onChange={(value) => setQueryId(value)}
                             getOptionLabel={data => data.name}
                         />
-
                     </div>
                     <label className="quanLbl">Quantity: </label>
-                    <input onChange={handleNumber} className="quanInpt" type="number" name="quantity" min={0}></input>
+                    <input className="quanInpt" type="number" min={0} />
                     <button type="submit" value="Submit">Add</button>
                 </form>
             </div>
