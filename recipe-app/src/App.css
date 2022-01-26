@@ -68,8 +68,6 @@ a:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
- 
-  
 }
 
 .home_page{
@@ -126,25 +124,30 @@ a:hover {
   box-shadow: grey .01px .01px .1px .1px;
 }
 
-.test{
+.text{
   font-size: 100px;
 }
+
 .recipe_box{
   display: flex;
 }
-form{
-  display: table;
-  margin: auto;
-  margin-top: 100px;
-  background-color: grey;
-  padding: 100px;
-  border-radius: 10px;
+
+.ingredients_input{
+  height: 60vh;
+  width: 50%;
+  margin: 2% 1% 1% 1%;
+  background-color: rgb(132, 214, 201);
+  border-radius: 3%;
+  border: 2px solid aliceblue;
   font-size: 1.3rem;
+  padding:10%;
 }
+
 label{
   display: table-cell;
   padding: 3px;
 }
+
 input{
   display: table-cell;
   padding: 3px;
@@ -152,6 +155,7 @@ input{
   border-color: black;
   height: 17px;
 }
+
 .submitBtn{
   margin-top: 30px;
   width: 60%;
@@ -165,9 +169,44 @@ input{
   display: flex;
   flex-direction: row;
 }
+
 .quanInpt{
   width: 20%;
 }
+
 .quanLbl{
   align-content: right;
+}
+
+.legend_ingredient{
+    background-color: #000;
+    color: #fff;
+}
+
+.input_div{
+  text-align: right;
+  clear: both;
+  float:left;
+  margin-bottom: 5%;
+}
+
+.description_box{
+  
+  padding: 50%;
+}
+
+.name_txt{
+  padding-top: 2%;
+}
+
+.myForm{
+  height: 60vh;
+  width: 50%;
+  display: table;
+  margin: 2% 1% 1% 1%;
+  background-color: rgb(132, 214, 201);
+  border-radius: 3%;
+  font-size: 1.3rem;
+  border: 2px solid aliceblue;
+  padding: 3% 3% 3% 3%; 
 }
