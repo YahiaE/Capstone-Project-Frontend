@@ -38,7 +38,7 @@ return (
             {recipes.map((item) => {
                 return(
                     <div className="recipe_box">
-                        <div className="panel" onClick={() => { navigate("/recipepage") }}>
+                        <div className="panel" onClick={() => { navigate(`/recipepage/${item.id}`) }}>
                             <div className="topPanel">
                                 <img className="panelImg" src={item.img} />
                                 <div className="bottomPanel">

@@ -16,7 +16,7 @@ function App() {
                   <Route exact path="/" element={<Home />} />
                   <Route exact path="/allrecipes" element={<AllRecipes />} />
                   <Route exact path="/createrecipes" element={<CreateRecipes />} />
-                  <Route exact path="/recipePage" element={<RecipePage />} />
+                  <Route exact path="/recipePage/:id" element={<RecipePage />} />
               </Routes>
           </RecipeAPIProvider>
       </div>

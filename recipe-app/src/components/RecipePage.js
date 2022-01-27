@@ -1,35 +1,68 @@
 import Navbar from "./Navbar";
 import timer from '../images/timerBlack-removebg-preview.png'
+import {useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 
 export default function RecipePage() {
+
+    const [recipeInfo, setRecipeInfo] = useState([])
+    const [ingredientInfo, setIngredientInfo] = useState([])
+    const { id } = useParams()
+
+    useEffect(() => {
+        async function fetchData() {
+            const { data } = await axios.get(`http://localhost:3001/recipe/${id}`)
+            setRecipeInfo(data)
+            console.log("rec" + data)
+        }
+        fetchData().then(() => console.log("Data Fetched"))
+    },[]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const ing = await axios.get(`http://localhost:3001/recipe_items/list/${id}`)
+            setIngredientInfo(ing.data)
+
+        }
+        fetchData().then(() => console.log("Data Fetched"))
+    },[recipeInfo]);
+
+    console.log(ingredientInfo)
+
     return (
         <div className="recipe_container">
             <Navbar />
             <div className="topPage">
                 <div className="topBar" >
-                    <h1>Pan Seared Steak</h1>
+                    <h1>{recipeInfo.name}</h1>
                 </div>
                 <div className="under_header_box">
                     <img className="timerRecipe" src={timer} />
                     <div className="timer_box">
-                        <h3 className="time_text">60 Mins</h3>
+                        <h3 className="time_text">{recipeInfo.time}</h3>
                     </div>
-                    <p className="difficulty_text">Difficulty 5</p>
+                    <p className="difficulty_text">Difficulty {recipeInfo.level_of_diff}</p>
                 </div>
 
 
                 <div className="orderPage">
                     <div className="imgHolder">
-                        <img className="pageImg" src="https://natashaskitchen.com/wp-content/uploads/2020/03/Pan-Seared-Steak-4.jpg" />
+                        <img className="pageImg" src={recipeInfo.img} />
                     </div>
                     <div className="rightSide" >
-                        <h2 className="test2">Pan Seared Steak with Garlic Butter and Rosemary</h2>
+                        <h2 className="test2">{recipeInfo.description}</h2>
                         <h3>Ingredients</h3>
                         <div className="list_box">
                             <ul className="listItem">
-                                <li >apple, 2</li>
+                                {recipeInfo && ingredientInfo.map(item => {
+                                    return (
+                                        <li>{item.ingredient}, {item.quantity}</li>
+                                    )
+                                })}
                             </ul>
+
                         </div>
                     </div>
 
@@ -39,7 +72,7 @@ export default function RecipePage() {
                 <div className="box1">
                     <h2>Steps</h2>
                     <div className="box2">
-                        <p >put the food in the pot.Then stir it hudhjasn sakdjskdsad kladjda jadjd asdjsldsl;daslmdfsfsffsfdsadasdadsdadsdsadadasddad</p>
+                        <p >{recipeInfo.steps}</p>
                     </div>
                 </div>
 

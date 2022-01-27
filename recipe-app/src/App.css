@@ -32,7 +32,7 @@ a:hover {
 }
 
 .links{
-  margin: 0.5% 1% 0% 0.1%; 
+  margin: 0.5% 1% 0% 0.1%;
   font-size: 24px;
   font-weight: bolder;
 }
@@ -79,10 +79,10 @@ a:hover {
  .home_img_text{
   margin: 0;
   position: absolute;
-  background: rgba(0,0,0,0.4); 
+  background: rgba(0,0,0,0.4);
   bottom:0;
-  color: #f1f1f1; 
-  width: auto; 
+  color: #f1f1f1;
+  width: auto;
   padding: 0% 3% 0% 2%;
   font-weight: bold;
   display: flex;
