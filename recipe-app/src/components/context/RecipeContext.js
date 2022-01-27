@@ -19,7 +19,6 @@ export function useRecipesContext() {
     return useContext(RecipesContext)
 }
 
-
 export function useIngredientsDispatchContext() {
    return useContext(IngredientsDispatchContext)
 }
@@ -74,15 +73,10 @@ function ingredientsReducer(ingredients, action) {
 
 
 
-let id = 0
 
 async function addRecipe(recipe) {
     try {
-        await axios.post('http://localhost:3001/recipe/addRecipe', recipe).then(val => {
-            console.log(val.data.id);
-            id = val.data.id;
-
-        })
+        await axios.post('http://localhost:3001/recipe/addRecipe', recipe);
     } catch (e) {
         alert("Error adding recipe")
     }
@@ -90,8 +84,6 @@ async function addRecipe(recipe) {
 
 //Add an ingredient
 async function addIngredients(ingredient) {
-    console.log(id)
-    ingredient.recipeId = id;
     console.log(ingredient)
     try {
         await axios.post('http://localhost:3001/recipe_items/addIngredients', ingredient)
@@ -117,7 +109,6 @@ function RecipeAPIProvider({children}) {
                 response = val.data
                 change = false
                 dispatch({type: ACTIONS.INITIALIZE, payload: response})
-                console.log("I happened! I initialized!")
             })
         } catch (e) {
             alert("Error retrieving recipes")

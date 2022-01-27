@@ -75,7 +75,6 @@ export default function CreateRecipes() {
                 ingredient: query,
                 quantity: amount,
                 recipeId: null
-                // calories: data.data.nutrition.nutrients[17].amount, 
             }
             setUserIngredientList(prev => prev.concat(obj))
         }
@@ -100,13 +99,14 @@ export default function CreateRecipes() {
             description: e.target[1].value,
             time: e.target[3].value,
             steps: e.target[4].value,
+            img:  e.target[5].value
         }
 
         console.log(obj)
-        dispatch({type: ACTION.ADD, payload: obj})
-
-        
+        dispatch({type: ACTION.ADD, payload: obj}) 
+        console.log(userIngredientList)
         userIngredientList.map(ingredient => ingredientDispatch({type: ACTION.ADD, payload: ingredient}));
+        setUserIngredientList([])
 
 
         // for(let i = 0; i < userIngredientList.length; i++){
@@ -191,8 +191,6 @@ export default function CreateRecipes() {
                     </div>
                 </form>
                 <form className="ingredients_input" onSubmit={submitHandler}>
-
-                    <legend>here</legend>
                     <div>
                         <label className="ingredients">Ingredients: </label>
                         {/* <input type="text" name="ingredients" onChange={handleSearch}></input> */}
