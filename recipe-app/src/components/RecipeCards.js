@@ -17,8 +17,12 @@ export default function RecipeCards(props) {
             const data = await axios.get("http://localhost:3001/recipe")
 
             if(props.isRecent){
-                const limit = data.data.slice(0,5);
-                setRecipes(limit)
+                if(data.data.length >= 4){
+                    const limit = data.data.slice(data.data.length-4).reverse();
+                    setRecipes(limit)
+                } else {
+                    setRecipes(data.data)
+                }  
             } else {
                 setRecipes(data.data)
             }

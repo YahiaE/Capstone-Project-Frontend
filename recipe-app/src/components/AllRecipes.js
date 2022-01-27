@@ -10,11 +10,9 @@ export default function AllRecipes(){
 
 
     return(
-        
-
         <div>
             <Navbar />
-            <RecipeCards isRecent={true}/>
+            <RecipeCards isRecent={false}/>
         </div>
     )
 }
