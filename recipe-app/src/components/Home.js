@@ -1,7 +1,7 @@
 import React from "react"
 import Navbar from "./Navbar"
 import SlideShow from "./SlideShow"
-
+import RecipeCards from "./RecipeCards"
 export default function Home() {
     return (
         
@@ -17,6 +17,7 @@ export default function Home() {
                 </div> */}
                 <div className="recent_recipes">
                     <h1>Recent Recipes</h1>
+                    <RecipeCards isRecent={true}/>
                 </div>
             </div>
         </div>

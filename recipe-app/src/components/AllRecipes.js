@@ -14,7 +14,7 @@ export default function AllRecipes(){
 
         <div>
             <Navbar />
-            <RecipeCards />
+            <RecipeCards isRecent={true}/>
         </div>
     )
 }
