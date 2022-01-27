@@ -4,7 +4,7 @@ import Navbar from "./Navbar"
 import axios from "axios"
 import AsyncSelect from "react-select/async";
 import ListofIngredients from "./ListofIngredients";
-import {useActionKeyContext, useDispatchContext} from "./context/RecipeContext";
+import { useActionKeyContext, useDispatchContext } from "./context/RecipeContext";
 
 
 export default function CreateRecipes() {
@@ -35,7 +35,7 @@ export default function CreateRecipes() {
 
 
     //apikey
-    const apiKey = 'fed50daa930847a1a3cf282ef28c9f3b'
+    const apiKey = '0ff1d546021945128788f803cac47584'
     //API Keys
     //0ff1d546021945128788f803cac47584
     //dd323d58462c4007843ea152dc7fee30
@@ -71,7 +71,7 @@ export default function CreateRecipes() {
             const data = await axios.get(`https://api.spoonacular.com/food/ingredients/${ingredientID}/information?apiKey=${apiKey}&amount=${amount}`)
             let obj = {
                 ingredient: query,
-                quantity:amount
+                quantity: amount
                 // calories: data.data.nutrition.nutrients[17].amount, 
             }
             setUserIngredientList(prev => prev.concat(obj))
@@ -89,20 +89,57 @@ export default function CreateRecipes() {
 
     }
 
-    function recipeSubmit(e){
+    function recipeSubmit(e) {
         e.preventDefault()
         let obj = {
             name: e.target[0].value,
-            level_of_diff: e.target[2].value ,
-            description: e.target[1].value ,
+            level_of_diff: e.target[2].value,
+            description: e.target[1].value,
             time: e.target[3].value,
-            steps: e.target[4].value ,
+            steps: e.target[4].value,
         }
 
         console.log(obj)
-        dispatch({type: ACTION.ADD_RECIPE, payload: obj})
+        dispatch({ type: ACTION.ADD_RECIPE, payload: obj })
 
     }
+    //async-select styler
+    const customStyles = {
+        control: (base, state) => ({
+            ...base,
+            background: "#ececec",
+            // match with the menu
+            borderRadius: "8px",
+            // Overwrittes the different states of border
+            borderColor: state.isFocused ? "blue" : "green",
+            // Removes weird border around container
+            boxShadow: state.isFocused ? null : null,
+            "&:hover": {
+                // Overwrittes the different states of border
+                borderColor: "blue"
+            }
+        }),
+        menu: base => ({
+            ...base,
+            // override border radius to match the box
+            borderRadius: "8px",
+            // kill the gap
+            marginTop: 0
+        }),
+        menuList: base => ({
+            ...base,
+            // kill the white space on first and last option
+            padding: 0,
+        }),
+        option: (provided, state) => ({
+            ...provided,
+
+            borderBottom: '1px dotted pink',
+            color: state.isSelected ? 'black' : 'blue',
+            padding: 20,
+            background: '#ffffff'
+        }),
+    };
 
     return (
         <div>
@@ -111,50 +148,54 @@ export default function CreateRecipes() {
                 <form className="myForm" onSubmit={recipeSubmit}>
                     <div className="input_div">
                         <label className="name_txt">Recipe Name: </label>
-                        <input type="text" name="name"></input>
+                        <input className="recipe_name_box" type="text" name="name"></input>
                     </div>
                     <div className="input_div">
                         <label className="description_text">Description: </label>
-                        <input className="description_box" type="text" name="description"></input>
+                        <textarea className="description_box" type="text" name="description"></textarea>
                     </div>
                     <div className="input_div">
                         <label>Diffuculty Level: </label>
-                        <input type="text" name="level_of_diff"></input>
+                        <input className="diiffuculty_box" type="text" name="level_of_diff"></input>
                     </div>
                     <div className="input_div">
                         <label>Time: </label>
-                        <input type="text" name="time"></input>
+                        <input className="time_box" type="text" name="time"></input>
                     </div>
                     <div className="input_div">
                         <label>Steps: </label>
-                        <input type="text" name="steps"></input>
+                        <input className="steps_box" type="text" name="steps"></input>
                     </div>
                     <div className="input_div">
                         <input className="submitBtn" type="submit" value="Submit"></input>
                     </div>
                 </form>
                 <form className="ingredients_input" onSubmit={submitHandler}>
+
                     <legend>here</legend>
                     <div>
                         <label className="ingredients">Ingredients: </label>
                         {/* <input type="text" name="ingredients" onChange={handleSearch}></input> */}
                         <AsyncSelect
+                            styles={customStyles}
                             loadOptions={loadOptions}
                             onInputChange={(value) => setSearchField(value)}
                             onChange={(value) => setQuery(value.name)}
                             getOptionLabel={data => data.name}
                         />
                     </div>
-                    <label className="quanLbl">Quantity: </label>
-                    <input className="quanInpt" type="number" min={0} />
-                    <button type="submit" value="Submit">Add</button>
+                    <div className="quantity_box">
+                        <label className="quanLbl">Quantity: </label>
+                        <input className="quanInpt" type="number" min={0} />
+                        <button className="add_btn" type="submit" value="Submit">Add</button>
+                    </div>
                     <div>
 
-                        <ListofIngredients data = {userIngredientList} />
+                        <ListofIngredients data={userIngredientList} />
 
                     </div>
-                        
-                </form>              
+
+                </form>
             </div>
         </div>
     )
