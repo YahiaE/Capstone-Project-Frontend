@@ -37,6 +37,7 @@ export default function RecipeCards() {
                         return( 
                      <div className="recipe_box">
                         <div className="panel">
+                            <button>X</button>
                         <div className="topPanel">
                                 <img className="panelImg" src={item.img} />
                                 <div className="bottomPanel">
