@@ -4,7 +4,7 @@ import logoLoad from '../images/loading.gif'
 import { Link } from "react-router-dom";
 import timer from '../images/timer2.png'
 import {useActionKeyContext, useDispatchContext, useIngredientsDispatchContext} from "./context/RecipeContext";
-export default function RecipeCards() {
+export default function RecipeCards(props) {
 
 
     const [recipes, setRecipes] = useState([])
@@ -15,7 +15,15 @@ export default function RecipeCards() {
     useEffect(() => {
         const getRecipes = async () => {
             const data = await axios.get("http://localhost:3001/recipe")
-            setRecipes(data.data)
+
+            if(props.isRecent){
+                const limit = data.data.slice(0,5);
+                setRecipes(limit)
+            } else {
+                setRecipes(data.data)
+            }
+            
+            
         }
         getRecipes()
     }, []);
@@ -37,7 +45,7 @@ export default function RecipeCards() {
                 {recipes.map((item) => {
                         return( 
                      <div className="recipe_box">
-                        <div className="panel">
+                        <div className="panel" onClick={() => console.log("Clicked On " + item.id)}>
                             
                         <div className="topPanel">
                                 <img className="panelImg" src={item.img} />

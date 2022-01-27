@@ -110,7 +110,7 @@ export default function CreateRecipes() {
 
     //completely submitting ingredients
     function addIngredientHandler(e) {
-
+        console.log(userIngredientList)
         e.preventDefault()
         userIngredientList.map(ingredient => {
             ingredient.recipeId = recipeId;
