@@ -86,12 +86,10 @@ export default function CreateRecipes() {
 
     //submit handler for add ingredients button
     function submitHandler(e) {
-
         setAmount(e.target[1].value)
         e.preventDefault()
         e.target[1].value = ""
         setChange(prev => !prev)
-
     }
 
     //Submitting a recipe
@@ -105,7 +103,6 @@ export default function CreateRecipes() {
             steps: e.target[4].value,
             img: e.target[5].value
         }
-
         console.log(obj)
         dispatch({type: ACTION.ADD, payload: obj})
         setShowIngButt(true)
@@ -126,39 +123,30 @@ export default function CreateRecipes() {
         navigate('/')
     }
 
-
     //async-select styler
     const customStyles = {
         control: (base, state) => ({
             ...base,
             background: "#ececec",
-            // match with the menu
             borderRadius: "8px",
-            // Overwrittes the different states of border
             borderColor: state.isFocused ? "blue" : "green",
             // Removes weird border around container
             boxShadow: state.isFocused ? null : null,
             "&:hover": {
-                // Overwrittes the different states of border
                 borderColor: "blue"
             }
         }),
         menu: base => ({
             ...base,
-            // override border radius to match the box
             borderRadius: "8px",
-            // kill the gap
             marginTop: 0
         }),
         menuList: base => ({
             ...base,
-            // kill the white space on first and last option
             padding: 0,
         }),
         option: (provided, state) => ({
             ...provided,
-
-            borderBottom: '1px dotted pink',
             color: state.isSelected ? 'black' : 'blue',
             padding: 20,
             background: '#ffffff'
