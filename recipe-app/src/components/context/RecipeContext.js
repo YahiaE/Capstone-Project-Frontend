@@ -98,7 +98,6 @@ function RecipeAPIProvider({children}) {
 
     let response
     useEffect(async () => {
-        console.log(recipes)
         response = recipes;
     }, [recipes])
 

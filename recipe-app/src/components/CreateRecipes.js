@@ -121,6 +121,7 @@ export default function CreateRecipes() {
         console.log(userIngredientList)
         userIngredientList.map(ingredient => {
             ingredient.recipeId = recipeId;
+            console.log(recipeId);
             ingredientDispatch({type: ACTION.ADD, payload: ingredient})
         });
         setUserIngredientList([])

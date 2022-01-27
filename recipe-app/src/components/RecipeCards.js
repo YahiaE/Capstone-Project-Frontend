@@ -18,9 +18,7 @@ export default function RecipeCards() {
     }, []);
 
 
-    console.log(recipes)
     if (recipes.length < 1) {
-        console.log("loading")
         return (
             <div>
                 <img className="loader" src={logoLoad} alt="loading" style={{width: "500px"}}/>
