@@ -38,7 +38,7 @@ export default function CreateRecipes() {
 
 
     //apikey
-    const apiKey = '135105a81ad44fc89fc31589dcff5303'
+    const apiKey = '084ccfa492e6484e8e1b6294d9c7bbb4'
     //API Keys
     //0ff1d546021945128788f803cac47584
     //dd323d58462c4007843ea152dc7fee30
@@ -215,13 +215,11 @@ export default function CreateRecipes() {
                     </div>
                     <div className="quantity_box">
                         <label className="quanLbl">Quantity: </label>
-                        <input className="quanInpt" type="number" min={0} />
+                        <input className="quanInpt" type="number" min={1} />
                         <button className="add_btn" type="submit" value="Submit">Add</button>
                     </div>
                     <div>
-
                         <ListofIngredients data = {userIngredientList} keyId ={ingredientID} />
-
                     </div>
 
                 </form>
