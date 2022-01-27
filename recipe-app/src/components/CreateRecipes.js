@@ -167,6 +167,10 @@ export default function CreateRecipes() {
                         <input className="steps_box" type="text" name="steps"></input>
                     </div>
                     <div className="input_div">
+                        <label>Image Link </label>
+                        <input className="image_box" type="text" name="image"></input>
+                    </div>
+                    <div className="input_div">
                         <input className="submitBtn" type="submit" value="Submit"></input>
                     </div>
                 </form>
