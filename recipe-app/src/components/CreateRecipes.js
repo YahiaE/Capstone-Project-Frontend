@@ -195,7 +195,7 @@ export default function CreateRecipes() {
                     </div>
                     <div>
 
-                        <ListofIngredients data={userIngredientList} />
+                        <ListofIngredients data = {userIngredientList} keyId ={ingredientID} />
 
                     </div>
 
