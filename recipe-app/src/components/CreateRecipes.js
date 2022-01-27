@@ -4,7 +4,7 @@ import Navbar from "./Navbar"
 import axios from "axios"
 import AsyncSelect from "react-select/async";
 import ListofIngredients from "./ListofIngredients";
-import { useActionKeyContext, useDispatchContext } from "./context/RecipeContext";
+import {useActionKeyContext, useDispatchContext, useIngredientsDispatchContext} from "./context/RecipeContext";
 
 
 export default function CreateRecipes() {
@@ -30,7 +30,9 @@ export default function CreateRecipes() {
     const [change, setChange] = useState(false)
 
     const dispatch = useDispatchContext()
+    const ingredientDispatch = useIngredientsDispatchContext()
     const ACTION = useActionKeyContext()
+
 
 
 
@@ -71,14 +73,15 @@ export default function CreateRecipes() {
             const data = await axios.get(`https://api.spoonacular.com/food/ingredients/${ingredientID}/information?apiKey=${apiKey}&amount=${amount}`)
             let obj = {
                 ingredient: query,
-                quantity: amount
+                quantity: amount,
+                recipeId: null
                 // calories: data.data.nutrition.nutrients[17].amount, 
             }
             setUserIngredientList(prev => prev.concat(obj))
         }
     }, [change])
 
-    console.log(userIngredientList)
+    // console.log(userIngredientList)
     //submit handler for add button
     function submitHandler(e) {
 
@@ -100,7 +103,20 @@ export default function CreateRecipes() {
         }
 
         console.log(obj)
-        dispatch({ type: ACTION.ADD_RECIPE, payload: obj })
+        dispatch({type: ACTION.ADD, payload: obj})
+
+        
+        userIngredientList.map(ingredient => ingredientDispatch({type: ACTION.ADD, payload: ingredient}));
+
+
+        // for(let i = 0; i < userIngredientList.length; i++){
+        //     let obj = userIngredientList[i];
+        //     ingredientDispatch({{type: ACTION.ADD, payload: obj});
+        // }
+
+        
+        // 
+        console.log(userIngredientList);
 
     }
     //async-select styler

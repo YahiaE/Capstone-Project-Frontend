@@ -4,6 +4,8 @@ import axios from "axios";
 const ActionKeyContext = React.createContext()
 const DispatchContext = React.createContext()
 const RecipesContext = React.createContext()
+const IngredientsDispatchContext = React.createContext()
+const IngredientsContext = React.createContext()
 
 export function useActionKeyContext() {
     return useContext(ActionKeyContext)
@@ -18,11 +20,20 @@ export function useRecipesContext() {
 }
 
 
+export function useIngredientsDispatchContext() {
+   return useContext(IngredientsDispatchContext)
+}
+
+export function useIngredientsContext() {
+    return useContext(IngredientsContext)
+}
+
+
 const ACTIONS = {
     INITIALIZE: 'init',
-    ADD_RECIPE: 'add',
-    REMOVE_RECIPE: 'remove',
-    UPDATE_RECIPE_INFO: 'update'
+    ADD: 'add',
+    REMOVE: 'remove',
+    UPDATE_INFO: 'update'
 }
 
 let change = false;
@@ -32,14 +43,13 @@ function reducer(recipe, action) {
     switch (action.type) {
         case ACTIONS.INITIALIZE:
             return action.payload
-        case ACTIONS.ADD_RECIPE: {
+        case ACTIONS.ADD: {
             addRecipe(action.payload)
             change = true;
-
         }
-        case ACTIONS.REMOVE_RECIPE:
+        case ACTIONS.REMOVE:
             return
-        case ACTIONS.UPDATE_RECIPE_INFO:
+        case ACTIONS.UPDATE_INFO:
             return
     }
 }
@@ -47,35 +57,47 @@ function reducer(recipe, action) {
 
 
 //Ingredients Reducer
-function ingredientsReducer(recipe, action) {
+function ingredientsReducer(ingredients, action) {
     switch (action.type) {
         case ACTIONS.INITIALIZE:
             return action.payload
-        case ACTIONS.ADD_RECIPE: {
+        case ACTIONS.ADD: {
             addIngredients(action.payload)
             change = true;
         }
-        case ACTIONS.REMOVE_RECIPE:
+        case ACTIONS.REMOVE:
             return
-        case ACTIONS.UPDATE_RECIPE_INFO:
+        case ACTIONS.UPDATE_INFO:
             return
     }
 }
 
-//Add an ingredient
-function addIngredients(payload) {
 
-}
+
+let id = 0
+
 async function addRecipe(recipe) {
-    let response
     try {
         await axios.post('http://localhost:3001/recipe/addRecipe', recipe).then(val => {
-            response = val.data
+            console.log(val.data.id);
+            id = val.data.id;
+
         })
     } catch (e) {
         alert("Error adding recipe")
     }
-    return response
+}
+
+//Add an ingredient
+async function addIngredients(ingredient) {
+    console.log(id)
+    ingredient.recipeId = id;
+    console.log(ingredient)
+    try {
+        await axios.post('http://localhost:3001/recipe_items/addIngredients', ingredient)
+    } catch (e) {
+        alert("Error adding ingredient")
+    }
 }
 
 function RecipeAPIProvider({children}) {
@@ -106,7 +128,11 @@ function RecipeAPIProvider({children}) {
         <ActionKeyContext.Provider value={ACTIONS}>
             <RecipesContext.Provider value={recipes}>
                 <DispatchContext.Provider value={dispatch}>
-                    {children}
+                    <IngredientsContext.Provider value={ingredients}>
+                        <IngredientsDispatchContext.Provider value={ingredientsDispatch}>
+                            {children}
+                        </IngredientsDispatchContext.Provider>
+                    </IngredientsContext.Provider>
                 </DispatchContext.Provider>
             </RecipesContext.Provider>
         </ActionKeyContext.Provider>
