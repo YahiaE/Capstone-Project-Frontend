@@ -4,6 +4,7 @@ import Navbar from "./Navbar"
 import axios from "axios"
 import AsyncSelect from "react-select/async";
 import ListofIngredients from "./ListofIngredients";
+import {useActionKeyContext, useDispatchContext} from "./context/RecipeContext";
 
 
 export default function CreateRecipes() {
@@ -27,6 +28,11 @@ export default function CreateRecipes() {
     const [recipe, setRecipe] = useState()
     //change state
     const [change, setChange] = useState(false)
+
+    const dispatch = useDispatchContext()
+    const ACTION = useActionKeyContext()
+
+
 
     //apikey
     const apiKey = 'fed50daa930847a1a3cf282ef28c9f3b'
@@ -72,28 +78,30 @@ export default function CreateRecipes() {
         }
     }, [change])
 
+    console.log(userIngredientList)
     //submit handler for add button
     function submitHandler(e) {
 
         setAmount(e.target[1].value)
         e.preventDefault()
-        console.log(e.target[1].value)
         e.target[1].value = ""
         setChange(prev => !prev)
 
     }
-    console.log(userIngredientList)
 
     function recipeSubmit(e){
         e.preventDefault()
-        console.log(e.target[4])
         let obj = {
             name: e.target[0].value,
-            description: e.target[1].value ,
             level_of_diff: e.target[2].value ,
+            description: e.target[1].value ,
             time: e.target[3].value,
             steps: e.target[4].value ,
         }
+
+        console.log(obj)
+        dispatch({type: ACTION.ADD_RECIPE, payload: obj})
+
     }
 
     return (
