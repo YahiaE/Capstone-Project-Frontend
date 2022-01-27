@@ -132,17 +132,6 @@ a:hover {
   display: flex;
 }
 
-.ingredients_input{
-  height: 60vh;
-  width: 50%;
-  margin: 2% 1% 1% 1%;
-  background-color: rgb(132, 214, 201);
-  border-radius: 3%;
-  border: 2px solid aliceblue;
-  font-size: 1.3rem;
-  padding:10%;
-}
-
 label{
   display: table-cell;
   padding: 3px;
@@ -208,5 +197,16 @@ input{
   border-radius: 3%;
   font-size: 1.3rem;
   border: 2px solid aliceblue;
-  padding: 3% 3% 3% 3%; 
+  padding: 3% 0% 2.7% 3%; 
+}
+
+.ingredients_input{
+  height: 60vh;
+  width: 50%;
+  margin: 2% 1% 1% 0%;
+  background-color: rgb(132, 214, 201);
+  border-radius: 3%;
+  border: 2px solid aliceblue;
+  font-size: 1.3rem;
+  padding: 8%  ;
 }
