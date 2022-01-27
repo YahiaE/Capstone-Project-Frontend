@@ -1,12 +1,13 @@
 export default function ListofIngredients(props) {
     const data = props.data
-
+console.log(data)
 
     return (
-        <div className='vids'>
+        <div>
 
             {data.map((item) => {
-                return <ul key={item.id}>{item.name} {item.amount} </ul>
+                
+                return <ul key={props.keyId}>{item.ingredient}, {item.quantity} </ul>
 
             })}
 
