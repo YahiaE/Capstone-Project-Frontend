@@ -20,7 +20,7 @@ export function useRecipesContext() {
 }
 
 export function useIngredientsDispatchContext() {
-   return useContext(IngredientsDispatchContext)
+    return useContext(IngredientsDispatchContext)
 }
 
 export function useIngredientsContext() {
@@ -54,7 +54,6 @@ function reducer(recipe, action) {
 }
 
 
-
 //Ingredients Reducer
 function ingredientsReducer(ingredients, action) {
     switch (action.type) {
@@ -70,8 +69,6 @@ function ingredientsReducer(ingredients, action) {
             return
     }
 }
-
-
 
 
 async function addRecipe(recipe) {
@@ -102,16 +99,11 @@ function RecipeAPIProvider({children}) {
     }, [recipes])
 
     useEffect(async () => {
-
-        try {
-            await axios.get('http://localhost:3001/recipe/').then(val => {
-                response = val.data
-                change = false
-                dispatch({type: ACTIONS.INITIALIZE, payload: response})
-            })
-        } catch (e) {
-            alert("Error retrieving recipes")
-        }
+        await axios.get('http://localhost:3001/recipe/').then(val => {
+            response = val.data
+            change = false
+            dispatch({type: ACTIONS.INITIALIZE, payload: response})
+        })
     }, [change])
 
     return (
