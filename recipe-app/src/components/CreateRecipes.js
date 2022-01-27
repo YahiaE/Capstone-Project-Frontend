@@ -29,6 +29,7 @@ export default function CreateRecipes() {
     //change state
     const [change, setChange] = useState(false)
 
+    const [recipeId, setRecipeId] = useState(0)
     const dispatch = useDispatchContext()
     const ingredientDispatch = useIngredientsDispatchContext()
     const ACTION = useActionKeyContext()
@@ -37,7 +38,7 @@ export default function CreateRecipes() {
 
 
     //apikey
-    const apiKey = '0ff1d546021945128788f803cac47584'
+    const apiKey = '135105a81ad44fc89fc31589dcff5303'
     //API Keys
     //0ff1d546021945128788f803cac47584
     //dd323d58462c4007843ea152dc7fee30
@@ -74,11 +75,24 @@ export default function CreateRecipes() {
             let obj = {
                 ingredient: query,
                 quantity: amount,
-                recipeId: null
+                recipeId: recipeId
             }
             setUserIngredientList(prev => prev.concat(obj))
         }
     }, [change])
+
+    useEffect(async () => {
+        if(isNaN(recipeId)){
+            setRecipeId(1);
+            setRecipeId(() => {return 1});
+        } else {
+            const data = await axios.get(`http://localhost:3001/recipe/GetRecent`).then(val => setRecipeId(val.data.id + 1))
+            setRecipeId(recipeId => {return recipeId});
+        }
+       
+
+        
+    }, [userIngredientList])
 
     // console.log(userIngredientList)
     //submit handler for add button
@@ -105,17 +119,13 @@ export default function CreateRecipes() {
         console.log(obj)
         dispatch({type: ACTION.ADD, payload: obj}) 
         console.log(userIngredientList)
-        userIngredientList.map(ingredient => ingredientDispatch({type: ACTION.ADD, payload: ingredient}));
+        userIngredientList.map(ingredient => {
+            ingredient.recipeId = recipeId;
+            ingredientDispatch({type: ACTION.ADD, payload: ingredient})
+        });
         setUserIngredientList([])
 
 
-        // for(let i = 0; i < userIngredientList.length; i++){
-        //     let obj = userIngredientList[i];
-        //     ingredientDispatch({{type: ACTION.ADD, payload: obj});
-        // }
-
-        
-        // 
         console.log(userIngredientList);
 
     }
