@@ -3,8 +3,10 @@ import React, { useContext, useEffect, useState } from "react";
 import logoLoad from '../images/loader1.gif'
 import { Link } from "react-router-dom";
 import timer from '../images/timer2.png'
+import { useNavigate } from "react-router-dom"
 
 export default function RecipeCards() {
+    let navigate = useNavigate();
 
 
     const [recipes, setRecipes] = useState(null)
@@ -13,9 +15,6 @@ export default function RecipeCards() {
         const getRecipes = async () => {
             const data = await axios.get("http://ctp-zip-api.herokuapp.com/zip/10001")
             setRecipes(data.data)
-            
-            
-
         }
         getRecipes()
     }, []);
@@ -52,29 +51,21 @@ export default function RecipeCards() {
             <div >
                 <ul className="recipeContainer">
                     <div className="recipe_box">
-                        <div className="panel">
+                        <div className="panel" onClick={() => { navigate("/recipepage") }}>
                             <div className="topPanel">
                                 <img className="panelImg" src="https://natashaskitchen.com/wp-content/uploads/2020/03/Pan-Seared-Steak-4.jpg" />
                                 <div className="bottomPanel">
                                     <h3 className="recipeName">Pan Seared Steak</h3>
                                     <div>
                                         <div className="descrption">
-                                        <h5 className="desText">Pan Seared Steak with Garlic Butter and Rosemary</h5>
+                                            <h5 className="desText">Pan Seared Steak with Garlic Butter and Rosemary</h5>
                                         </div>
                                         <div className="timeFlex">
-                                        <img className="timer" src={timer}  />
+                                            <img className="timer" src={timer} />
                                             <p >60 mins</p>
                                         </div>
                                     </div>
-
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="recipe_box">
-                        <div className="panel">
-                            <div className="topPanel">
-                                <h2>Recipe Name</h2>
                             </div>
                         </div>
                     </div>
