@@ -3,11 +3,14 @@ import React, { useContext, useEffect, useState } from "react";
 import logoLoad from '../images/loading.gif'
 import { Link } from "react-router-dom";
 import timer from '../images/timer2.png'
-
+import {useActionKeyContext, useDispatchContext, useIngredientsDispatchContext} from "./context/RecipeContext";
 export default function RecipeCards() {
 
 
     const [recipes, setRecipes] = useState([])
+    const dispatch = useDispatchContext()
+    const ingredientDispatch = useIngredientsDispatchContext()
+    const ACTION = useActionKeyContext()
 
     useEffect(() => {
         const getRecipes = async () => {
@@ -35,7 +38,7 @@ export default function RecipeCards() {
                         return( 
                      <div className="recipe_box">
                         <div className="panel">
-                            <button>X</button>
+                            
                         <div className="topPanel">
                                 <img className="panelImg" src={item.img} />
                                 <div className="bottomPanel">
@@ -47,6 +50,10 @@ export default function RecipeCards() {
                                         <div className="timeFlex">
                                         <img className="timer" src={timer}  />
                                             <p >{item.time}</p>
+                                            <button key={item.id} className="delete" onClick={() => {
+                                                dispatch({type: ACTION.REMOVE, payload: item.id})
+                                                window.location.reload(false);
+                                            }}><strong>X</strong></button>
                                         </div>
                                     </div>
 

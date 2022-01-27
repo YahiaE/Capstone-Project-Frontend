@@ -47,7 +47,7 @@ function reducer(recipe, action) {
             change = true;
         }
         case ACTIONS.REMOVE:
-            return
+            return removeRecipe(action.payload)
         case ACTIONS.UPDATE_INFO:
             return
     }
@@ -79,6 +79,15 @@ async function addRecipe(recipe) {
     }
 }
 
+async function removeRecipe(id) {
+    try {
+        await fetch('http://localhost:3001/recipe/remove/' + id, { method: 'DELETE' });
+
+    } catch (e) {
+        console.log("Removing recipe...")
+    }
+}
+
 //Add an ingredient
 async function addIngredients(ingredient) {
     console.log(ingredient)
@@ -99,11 +108,16 @@ function RecipeAPIProvider({children}) {
     }, [recipes])
 
     useEffect(async () => {
-        await axios.get('http://localhost:3001/recipe/').then(val => {
-            response = val.data
-            change = false
-            dispatch({type: ACTIONS.INITIALIZE, payload: response})
-        })
+
+        try {
+            await axios.get('http://localhost:3001/recipe/').then(val => {
+                response = val.data
+                change = false
+                dispatch({type: ACTIONS.INITIALIZE, payload: response})
+            })
+        } catch (e) {
+            console.log("Error retrieving recipes")
+        }
     }, [change])
 
     return (

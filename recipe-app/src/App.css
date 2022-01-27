@@ -331,3 +331,10 @@ textarea{
 .slideshowDot.active {
   background-color: #6a0dad;
 }
+
+.delete {
+    width:25px;
+    height:20px;
+    margin-top:15px;
+    margin-left:160px;
+}

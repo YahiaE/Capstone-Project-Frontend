@@ -207,6 +207,7 @@ export default function CreateRecipes() {
 
                         <ListofIngredients data={userIngredientList} keyId={ingredientID}/>
 
+
                     </div>
                     {showIngButt &&
                         <button className="add_btn" onClick={addIngredientHandler}>ADD INGREDIENT
