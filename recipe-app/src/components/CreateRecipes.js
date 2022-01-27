@@ -32,8 +32,6 @@ export default function CreateRecipes() {
     const dispatch = useDispatchContext()
     const ACTION = useActionKeyContext()
 
-
-
     //apikey
     const apiKey = '0ff1d546021945128788f803cac47584'
     //API Keys
@@ -81,14 +79,12 @@ export default function CreateRecipes() {
     console.log(userIngredientList)
     //submit handler for add button
     function submitHandler(e) {
-
         setAmount(e.target[1].value)
         e.preventDefault()
         e.target[1].value = ""
         setChange(prev => !prev)
-
     }
-
+    //post recipe
     function recipeSubmit(e) {
         e.preventDefault()
         let obj = {
@@ -98,43 +94,33 @@ export default function CreateRecipes() {
             time: e.target[3].value,
             steps: e.target[4].value,
         }
-
         console.log(obj)
         dispatch({ type: ACTION.ADD_RECIPE, payload: obj })
-
     }
     //async-select styler
     const customStyles = {
         control: (base, state) => ({
             ...base,
             background: "#ececec",
-            // match with the menu
             borderRadius: "8px",
-            // Overwrittes the different states of border
             borderColor: state.isFocused ? "blue" : "green",
             // Removes weird border around container
             boxShadow: state.isFocused ? null : null,
             "&:hover": {
-                // Overwrittes the different states of border
                 borderColor: "blue"
             }
         }),
         menu: base => ({
             ...base,
-            // override border radius to match the box
             borderRadius: "8px",
-            // kill the gap
             marginTop: 0
         }),
         menuList: base => ({
             ...base,
-            // kill the white space on first and last option
             padding: 0,
         }),
         option: (provided, state) => ({
             ...provided,
-
-            borderBottom: '1px dotted pink',
             color: state.isSelected ? 'black' : 'blue',
             padding: 20,
             background: '#ffffff'
@@ -175,8 +161,6 @@ export default function CreateRecipes() {
                     </div>
                 </form>
                 <form className="ingredients_input" onSubmit={submitHandler}>
-
-                    <legend>here</legend>
                     <div>
                         <label className="ingredients">Ingredients: </label>
                         {/* <input type="text" name="ingredients" onChange={handleSearch}></input> */}
@@ -194,11 +178,8 @@ export default function CreateRecipes() {
                         <button className="add_btn" type="submit" value="Submit">Add</button>
                     </div>
                     <div>
-
                         <ListofIngredients data = {userIngredientList} keyId ={ingredientID} />
-
                     </div>
-
                 </form>
             </div>
         </div>
