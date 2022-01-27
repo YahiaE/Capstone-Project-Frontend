@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import logoLoad from '../images/loading.gif'
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import timer from '../images/timer2.png'
 import {useActionKeyContext, useDispatchContext, useIngredientsDispatchContext} from "./context/RecipeContext";
-export default function RecipeCards(props) {
+import {useNavigate} from "react-router-dom"
 
+export default function RecipeCards(props) {
+    let navigate = useNavigate();
 
     const [recipes, setRecipes] = useState([])
     const dispatch = useDispatchContext()
@@ -26,8 +28,8 @@ export default function RecipeCards(props) {
             } else {
                 setRecipes(data.data)
             }
-            
-            
+
+
         }
         getRecipes()
     }, []);
@@ -41,17 +43,14 @@ export default function RecipeCards(props) {
         )
     } else {
         console.log("Recipes Loaded!");
-        return (
-            <div>
-                <ul className="recipeContainer">
-                    
-
-                {recipes.map((item) => {
-                        return( 
-                     <div className="recipe_box">
-                        <div className="panel" onClick={() => console.log("Clicked On " + item.id)}>
-                            
-                        <div className="topPanel">
+return (
+    <div>
+        <ul className="recipeContainer">
+            {recipes.map((item) => {
+                return(
+                    <div className="recipe_box">
+                        <div className="panel" onClick={() => { navigate(`/recipepage/${item.id}`) }}>
+                            <div className="topPanel">
                                 <img className="panelImg" src={item.img} />
                                 <div className="bottomPanel">
                                     <h3 className="recipeName">{item.name}</h3>
@@ -60,7 +59,7 @@ export default function RecipeCards(props) {
                                             <h5 className="desText">{item.description}</h5>
                                         </div>
                                         <div className="timeFlex">
-                                        <img className="timer" src={timer}  />
+                                            <img className="timer" src={timer}  />
                                             <p >{item.time}</p>
                                             <button key={item.id} className="delete" onClick={() => {
                                                 dispatch({type: ACTION.REMOVE, payload: item.id})
@@ -68,30 +67,15 @@ export default function RecipeCards(props) {
                                             }}><strong>X</strong></button>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
+                )
+            })}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        )
-                    })}
-                   
-                </ul>
-            </div>
-        );
-    }
+        </ul>
+    </div>
+);
+}
 }

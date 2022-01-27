@@ -18,6 +18,7 @@ export default function Navbar() {
         <Link to="/createrecipes" className="links">
           Create Recipes
         </Link>
+        
   
       </nav>
     );
