@@ -6,9 +6,8 @@ import timer from '../images/timer2.png'
 import {useActionKeyContext, useDispatchContext, useIngredientsDispatchContext} from "./context/RecipeContext";
 import {useNavigate} from "react-router-dom"
 
-export default function RecipeCards() {
+export default function RecipeCards(props) {
     let navigate = useNavigate();
-
 
     const [recipes, setRecipes] = useState([])
     const dispatch = useDispatchContext()
@@ -18,7 +17,15 @@ export default function RecipeCards() {
     useEffect(() => {
         const getRecipes = async () => {
             const data = await axios.get("http://localhost:3001/recipe")
-            setRecipes(data.data)
+
+            if(props.isRecent){
+                const limit = data.data.slice(0,5);
+                setRecipes(limit)
+            } else {
+                setRecipes(data.data)
+            }
+
+
         }
         getRecipes()
     }, []);
