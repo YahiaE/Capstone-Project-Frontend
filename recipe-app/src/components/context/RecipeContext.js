@@ -73,31 +73,31 @@ function ingredientsReducer(ingredients, action) {
 }
 
 //Add an ingredient
-async function addIngredients(ingredients) {
+async function addIngredients(ingredient) {
     let response
-    //ingredients.recipeId {
-        //get most recent recipe, and then copy its id here or osmethintg
-    //}
+    ingredient.recipeId = id;
     try {
-        await axios.post('http://localhost:3001/recipe/addIngredients', ingredients).then(val => {
-            response = val.data
+        await axios.post('http://localhost:3001/recipe_items/addIngredients', ingredient).then(val => {
+            console.log("Added Ingredient")
         })
     } catch (e) {
-        alert("Error adding ingredients")
+        alert("Error adding ingredient")
     }
     return response
 }
 
+let id 
+
 async function addRecipe(recipe) {
-    let response
     try {
         await axios.post('http://localhost:3001/recipe/addRecipe', recipe).then(val => {
-            response = val.data
+            console.log(val.data.id);
+            id = val.data.id;
+
         })
     } catch (e) {
         alert("Error adding recipe")
     }
-    return response
 }
 
 function RecipeAPIProvider({children}) {
