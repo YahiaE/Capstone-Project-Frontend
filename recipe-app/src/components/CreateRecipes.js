@@ -1,33 +1,31 @@
-import { useEffect } from "react"
-import { useState } from "react/cjs/react.development"
+import {useEffect} from "react"
+import {useState} from "react/cjs/react.development"
 import Navbar from "./Navbar"
 import axios from "axios"
 import AsyncSelect from "react-select/async";
 import ListofIngredients from "./ListofIngredients";
 import {useActionKeyContext, useDispatchContext, useIngredientsDispatchContext} from "./context/RecipeContext";
+import {useNavigate} from "react-router-dom";
 
 
 export default function CreateRecipes() {
+    const navigate = useNavigate()
     //search field state
     const [searchField, setSearchField] = useState("")
     //requested list from api state
     const [ingredientsList, setIngredientsList] = useState([])
-    //Added ingredients state
-    const [addedList, setAddedList] = useState({})
     //sets string value of the query
     const [query, setQuery] = useState("")
     //sets ID value of the query
     const [ingredientID, setIngredientID] = useState(null)
-    //state for ingredient nutrition info
-    const [ingredientNutrition, setIngredientNutrition] = useState(null)
     //state for amount of ingredient
     const [amount, setAmount] = useState()
     //an array of objects that contains the ingredients the user makes
     const [userIngredientList, setUserIngredientList] = useState([])
-    //recipe state
-    const [recipe, setRecipe] = useState()
     //change state
     const [change, setChange] = useState(false)
+    //Show ingredient Submit
+    const [showIngButt, setShowIngButt] = useState(false)
 
     const [recipeId, setRecipeId] = useState(0)
     const dispatch = useDispatchContext()
@@ -35,10 +33,8 @@ export default function CreateRecipes() {
     const ACTION = useActionKeyContext()
 
 
-
-
     //apikey
-    const apiKey = '135105a81ad44fc89fc31589dcff5303'
+    const apiKey = '084ccfa492e6484e8e1b6294d9c7bbb4'
     //API Keys
     //0ff1d546021945128788f803cac47584
     //dd323d58462c4007843ea152dc7fee30
@@ -82,29 +78,21 @@ export default function CreateRecipes() {
     }, [change])
 
     useEffect(async () => {
-        if(isNaN(recipeId)){
-            setRecipeId(1);
-            setRecipeId(() => {return 1});
-        } else {
-            const data = await axios.get(`http://localhost:3001/recipe/GetRecent`).then(val => setRecipeId(val.data.id + 1))
-            setRecipeId(recipeId => {return recipeId});
-        }
-       
+        await axios.get(`http://localhost:3001/recipe/GetRecent`).then(val => setRecipeId(val.data.id))
+        setRecipeId(recipeId => {
+            return recipeId
+        });
+    }, [showIngButt, userIngredientList, change])
 
-        
-    }, [userIngredientList])
-
-    // console.log(userIngredientList)
-    //submit handler for add button
+    //submit handler for add ingredients button
     function submitHandler(e) {
-
         setAmount(e.target[1].value)
         e.preventDefault()
         e.target[1].value = ""
         setChange(prev => !prev)
-
     }
 
+    //Submitting a recipe
     function recipeSubmit(e) {
         e.preventDefault()
         let obj = {
@@ -113,54 +101,52 @@ export default function CreateRecipes() {
             description: e.target[1].value,
             time: e.target[3].value,
             steps: e.target[4].value,
-            img:  e.target[5].value
+            img: e.target[5].value
         }
-
         console.log(obj)
-        dispatch({type: ACTION.ADD, payload: obj}) 
-        console.log(userIngredientList)
+        dispatch({type: ACTION.ADD, payload: obj})
+        setShowIngButt(true)
+    }
+
+    //completely submitting ingredients
+    function addIngredientHandler(e) {
+
+        e.preventDefault()
         userIngredientList.map(ingredient => {
             ingredient.recipeId = recipeId;
+            console.log(recipeId);
             ingredientDispatch({type: ACTION.ADD, payload: ingredient})
         });
+
         setUserIngredientList([])
-
-
-        console.log(userIngredientList);
-
+        setShowIngButt(false)
+        navigate('/')
     }
+
     //async-select styler
     const customStyles = {
         control: (base, state) => ({
             ...base,
             background: "#ececec",
-            // match with the menu
             borderRadius: "8px",
-            // Overwrittes the different states of border
             borderColor: state.isFocused ? "blue" : "green",
             // Removes weird border around container
             boxShadow: state.isFocused ? null : null,
             "&:hover": {
-                // Overwrittes the different states of border
                 borderColor: "blue"
             }
         }),
         menu: base => ({
             ...base,
-            // override border radius to match the box
             borderRadius: "8px",
-            // kill the gap
             marginTop: 0
         }),
         menuList: base => ({
             ...base,
-            // kill the white space on first and last option
             padding: 0,
         }),
         option: (provided, state) => ({
             ...provided,
-
-            borderBottom: '1px dotted pink',
             color: state.isSelected ? 'black' : 'blue',
             padding: 20,
             background: '#ffffff'
@@ -169,7 +155,7 @@ export default function CreateRecipes() {
 
     return (
         <div>
-            <Navbar />
+            <Navbar/>
             <div className="wrapperForm">
                 <form className="myForm" onSubmit={recipeSubmit}>
                     <div className="input_div">
@@ -214,15 +200,18 @@ export default function CreateRecipes() {
                     </div>
                     <div className="quantity_box">
                         <label className="quanLbl">Quantity: </label>
-                        <input className="quanInpt" type="number" min={0} />
+                        <input className="quanInpt" type="number" min={0}/>
                         <button className="add_btn" type="submit" value="Submit">Add</button>
                     </div>
                     <div>
 
-                        <ListofIngredients data = {userIngredientList} keyId ={ingredientID} />
+                        <ListofIngredients data={userIngredientList} keyId={ingredientID}/>
+
 
                     </div>
-
+                    {showIngButt &&
+                        <button className="add_btn" onClick={addIngredientHandler}>ADD INGREDIENT
+                            LIST!</button>}
                 </form>
             </div>
         </div>

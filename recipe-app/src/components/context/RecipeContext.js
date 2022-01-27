@@ -20,7 +20,7 @@ export function useRecipesContext() {
 }
 
 export function useIngredientsDispatchContext() {
-   return useContext(IngredientsDispatchContext)
+    return useContext(IngredientsDispatchContext)
 }
 
 export function useIngredientsContext() {
@@ -47,12 +47,11 @@ function reducer(recipe, action) {
             change = true;
         }
         case ACTIONS.REMOVE:
-            return
+            return removeRecipe(action.payload)
         case ACTIONS.UPDATE_INFO:
             return
     }
 }
-
 
 
 //Ingredients Reducer
@@ -72,13 +71,20 @@ function ingredientsReducer(ingredients, action) {
 }
 
 
-
-
 async function addRecipe(recipe) {
     try {
         await axios.post('http://localhost:3001/recipe/addRecipe', recipe);
     } catch (e) {
         alert("Error adding recipe")
+    }
+}
+
+async function removeRecipe(id) {
+    try {
+        await fetch('http://localhost:3001/recipe/remove/' + id, { method: 'DELETE' });
+
+    } catch (e) {
+        console.log("Removing recipe...")
     }
 }
 
@@ -98,7 +104,6 @@ function RecipeAPIProvider({children}) {
 
     let response
     useEffect(async () => {
-        console.log(recipes)
         response = recipes;
     }, [recipes])
 
@@ -111,7 +116,7 @@ function RecipeAPIProvider({children}) {
                 dispatch({type: ACTIONS.INITIALIZE, payload: response})
             })
         } catch (e) {
-            alert("Error retrieving recipes")
+            console.log("Error retrieving recipes")
         }
     }, [change])
 
