@@ -184,18 +184,19 @@ label{
 
 input{
   display: table-cell;
-  padding: 3px;
-  border-radius: 10px;
-  border-color: black;
-  height: 17px;
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: hidden;
+  background-color: #eee;
+  border-radius: 6px;
 }
 
 .submitBtn{
-  margin-top: 30px;
-  width: 60%;
-  height: 60%;
+  width: 100%;
+  height: 100%;
   font-size: 1.2rem;
-  background-color: #0096FF;
+  background-color: #131516;
   color: white;
 }
 
@@ -206,6 +207,7 @@ input{
 
 .quanInpt{
   width: 20%;
+  height: 5%;
 }
 
 .quanLbl{
@@ -222,11 +224,15 @@ input{
   clear: both;
   float:left;
   margin-bottom: 5%;
+  border: none
 }
 
 .description_box{
-  
-  padding: 50%;
+  border: none;
+  padding: 0;
+  width: 300px;
+  height: 150px;
+  background-color: #ececec;
 }
 
 .name_txt{
@@ -234,26 +240,61 @@ input{
 }
 
 .myForm{
-  height: 60vh;
+  max-height: 60vh;
   width: 50%;
   display: table;
-  margin: 2% 1% 1% 1%;
+  margin: 1% 1% 1% 1%;
   background-color: rgb(132, 214, 201);
   border-radius: 3%;
   font-size: 1.3rem;
-  border: 2px solid aliceblue;
-  padding: 3% 0% 2.7% 3%; 
+  border: 1% solid;
+  padding: 3% 0% 2% 3%; 
+  box-shadow: 9px 7px 3px #888888;
 }
 
 .ingredients_input{
-  height: 60vh;
+  max-height: 60vh;
   width: 50%;
-  margin: 2% 1% 1% 0%;
+  margin: 1% 1% 1% 0%;
   background-color: rgb(132, 214, 201);
   border-radius: 3%;
-  border: 2px solid aliceblue;
   font-size: 1.3rem;
   padding: 8%  ;
+  border: 1% solid;
+  box-shadow: 9px 7px 3px #888888;
+  float: center;
+}
+
+.recipe_name_box{
+  height: 25px
+}
+
+.diiffuculty_box{
+  height: 25px
+}
+
+.time_box{
+  height:25px
+}
+
+.steps_box{
+  height:5%
+}
+
+.quantity_box{
+  display: inline;
+ 
+}
+
+.add_btn{
+  border-radius: 8px;
+  margin-left: 7px;
+}
+
+textarea{
+  border-radius: 6px;
+}
+
 }
 .loader{
   margin-top: 09%;
