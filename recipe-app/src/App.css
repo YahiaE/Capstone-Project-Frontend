@@ -15,6 +15,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   background-color: #131516;
   
+  
 }
 
 a:link {
@@ -105,31 +106,75 @@ a:hover {
   background: rgba(236, 236, 236);
   text-align: left;
   vertical-align: middle;
-  padding: 10px 20px;
   line-height: 5px;
   border-bottom: 1px solid grey;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
   width: 100%;
+  
 }
+.bottomPanel{
+  inline-size: 225px;
+  
+}
+
 
 .panel {
   display: flex;
   width: 100%;
-  margin: auto;
-  border: 1px red solid;
+  border: 3px rgb(132, 214, 201) solid;
   border-radius: 6px;
   text-align: left;
   vertical-align: middle;
   box-shadow: grey .01px .01px .1px .1px;
+  
+}
+.panel:hover{
+  box-shadow: rgb(235, 200, 3) 4px 4px;
+}
+.panelImg {
+  height: 230px;
+  width: 230px;
+}
+.recipeName{
+  text-decoration: underline 2px;
+  padding-left: 8px;
+}
+.descrption{
+  
+  width: 100%;
+  line-height: 1.5;
+  padding-left: 8px;
+  
+}
+.desText{
+  
+  width: 100%;
+  
 }
 
 .text{
   font-size: 100px;
 }
+.recipeContainer{
+  display: flex;
+  flex-direction: row;
+}
+
 
 .recipe_box{
   display: flex;
+  padding: 2%;
+  
+  
+  
+}
+.timeFlex{
+  display: flex;
+}
+.timer{
+  height: 25px;
+  width: 25px;
+  
+  padding: 5px;
 }
 
 label{
@@ -210,3 +255,7 @@ input{
   font-size: 1.3rem;
   padding: 8%  ;
 }
+.loader{
+  margin-top: 09%;
+}
+
