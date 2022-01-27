@@ -4,6 +4,8 @@ import axios from "axios";
 const ActionKeyContext = React.createContext()
 const DispatchContext = React.createContext()
 const RecipesContext = React.createContext()
+const IngredientsDispatchContext = React.createContext()
+const IngredientsContext = React.createContext()
 
 export function useActionKeyContext() {
     return useContext(ActionKeyContext)
@@ -15,6 +17,15 @@ export function useDispatchContext() {
 
 export function useRecipesContext() {
     return useContext(RecipesContext)
+}
+
+
+export function useIngredientsDispatchContext() {
+   return useContext(IngredientsDispatchContext)
+}
+
+export function useIngredientsContext() {
+    return useContext(IngredientsContext)
 }
 
 
@@ -64,6 +75,9 @@ function ingredientsReducer(ingredients, action) {
 //Add an ingredient
 async function addIngredients(ingredients) {
     let response
+    //ingredients.recipeId {
+        //get most recent recipe, and then copy its id here or osmethintg
+    //}
     try {
         await axios.post('http://localhost:3001/recipe/addIngredients', ingredients).then(val => {
             response = val.data
@@ -114,7 +128,11 @@ function RecipeAPIProvider({children}) {
         <ActionKeyContext.Provider value={ACTIONS}>
             <RecipesContext.Provider value={recipes}>
                 <DispatchContext.Provider value={dispatch}>
-                    {children}
+                    <IngredientsContext.Provider value={ingredients}>
+                        <IngredientsDispatchContext.Provider value={ingredientsDispatch}>
+                            {children}
+                        </IngredientsDispatchContext.Provider>
+                    </IngredientsContext.Provider>
                 </DispatchContext.Provider>
             </RecipesContext.Provider>
         </ActionKeyContext.Provider>

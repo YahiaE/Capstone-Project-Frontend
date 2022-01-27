@@ -4,7 +4,7 @@ import Navbar from "./Navbar"
 import axios from "axios"
 import AsyncSelect from "react-select/async";
 import ListofIngredients from "./ListofIngredients";
-import {useActionKeyContext, useDispatchContext} from "./context/RecipeContext";
+import {useActionKeyContext, useDispatchContext, useIngredientsDispatchContext} from "./context/RecipeContext";
 
 
 export default function CreateRecipes() {
@@ -30,7 +30,9 @@ export default function CreateRecipes() {
     const [change, setChange] = useState(false)
 
     const dispatch = useDispatchContext()
+    const ingredientDispatch = useIngredientsDispatchContext()
     const ACTION = useActionKeyContext()
+
 
 
 
