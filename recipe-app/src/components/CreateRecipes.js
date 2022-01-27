@@ -150,7 +150,7 @@ export default function CreateRecipes() {
                     <button type="submit" value="Submit">Add</button>
                     <div>
 
-                        <ListofIngredients data = {userIngredientList} />
+                        <ListofIngredients data = {userIngredientList} keyId ={ingredientID} />
 
                     </div>
                         
