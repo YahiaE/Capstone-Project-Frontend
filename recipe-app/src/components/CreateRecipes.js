@@ -100,7 +100,7 @@ export default function CreateRecipes() {
         }
 
         console.log(obj)
-        dispatch({type: ACTION.ADD_RECIPE, payload: obj})
+        dispatch({type: ACTION.ADD, payload: obj})
 
     }
 

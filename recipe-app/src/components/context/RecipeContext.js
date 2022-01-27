@@ -20,9 +20,9 @@ export function useRecipesContext() {
 
 const ACTIONS = {
     INITIALIZE: 'init',
-    ADD_RECIPE: 'add',
-    REMOVE_RECIPE: 'remove',
-    UPDATE_RECIPE_INFO: 'update'
+    ADD: 'add',
+    REMOVE: 'remove',
+    UPDATE_INFO: 'update'
 }
 
 let change = false;
@@ -32,14 +32,13 @@ function reducer(recipe, action) {
     switch (action.type) {
         case ACTIONS.INITIALIZE:
             return action.payload
-        case ACTIONS.ADD_RECIPE: {
+        case ACTIONS.ADD: {
             addRecipe(action.payload)
             change = true;
-
         }
-        case ACTIONS.REMOVE_RECIPE:
+        case ACTIONS.REMOVE:
             return
-        case ACTIONS.UPDATE_RECIPE_INFO:
+        case ACTIONS.UPDATE_INFO:
             return
     }
 }
@@ -47,25 +46,34 @@ function reducer(recipe, action) {
 
 
 //Ingredients Reducer
-function ingredientsReducer(recipe, action) {
+function ingredientsReducer(ingredients, action) {
     switch (action.type) {
         case ACTIONS.INITIALIZE:
             return action.payload
-        case ACTIONS.ADD_RECIPE: {
+        case ACTIONS.ADD: {
             addIngredients(action.payload)
             change = true;
         }
-        case ACTIONS.REMOVE_RECIPE:
+        case ACTIONS.REMOVE:
             return
-        case ACTIONS.UPDATE_RECIPE_INFO:
+        case ACTIONS.UPDATE_INFO:
             return
     }
 }
 
 //Add an ingredient
-function addIngredients(payload) {
-
+async function addIngredients(ingredients) {
+    let response
+    try {
+        await axios.post('http://localhost:3001/recipe/addIngredients', ingredients).then(val => {
+            response = val.data
+        })
+    } catch (e) {
+        alert("Error adding ingredients")
+    }
+    return response
 }
+
 async function addRecipe(recipe) {
     let response
     try {
