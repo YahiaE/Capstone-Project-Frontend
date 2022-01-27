@@ -29,6 +29,7 @@ export default function CreateRecipes() {
     //change state
     const [change, setChange] = useState(false)
 
+    const [recipeId, setRecipeId] = useState(0)
     const dispatch = useDispatchContext()
     const ingredientDispatch = useIngredientsDispatchContext()
     const ACTION = useActionKeyContext()
@@ -37,7 +38,7 @@ export default function CreateRecipes() {
 
 
     //apikey
-    const apiKey = '0ff1d546021945128788f803cac47584'
+    const apiKey = '135105a81ad44fc89fc31589dcff5303'
     //API Keys
     //0ff1d546021945128788f803cac47584
     //dd323d58462c4007843ea152dc7fee30
@@ -74,12 +75,24 @@ export default function CreateRecipes() {
             let obj = {
                 ingredient: query,
                 quantity: amount,
-                recipeId: null
-                // calories: data.data.nutrition.nutrients[17].amount, 
+                recipeId: recipeId
             }
             setUserIngredientList(prev => prev.concat(obj))
         }
     }, [change])
+
+    useEffect(async () => {
+        if(isNaN(recipeId)){
+            setRecipeId(1);
+            setRecipeId(() => {return 1});
+        } else {
+            const data = await axios.get(`http://localhost:3001/recipe/GetRecent`).then(val => setRecipeId(val.data.id + 1))
+            setRecipeId(recipeId => {return recipeId});
+        }
+       
+
+        
+    }, [userIngredientList])
 
     // console.log(userIngredientList)
     //submit handler for add button
@@ -100,22 +113,19 @@ export default function CreateRecipes() {
             description: e.target[1].value,
             time: e.target[3].value,
             steps: e.target[4].value,
+            img:  e.target[5].value
         }
 
         console.log(obj)
-        dispatch({type: ACTION.ADD, payload: obj})
+        dispatch({type: ACTION.ADD, payload: obj}) 
+        console.log(userIngredientList)
+        userIngredientList.map(ingredient => {
+            ingredient.recipeId = recipeId;
+            ingredientDispatch({type: ACTION.ADD, payload: ingredient})
+        });
+        setUserIngredientList([])
 
-        
-        userIngredientList.map(ingredient => ingredientDispatch({type: ACTION.ADD, payload: ingredient}));
 
-
-        // for(let i = 0; i < userIngredientList.length; i++){
-        //     let obj = userIngredientList[i];
-        //     ingredientDispatch({{type: ACTION.ADD, payload: obj});
-        // }
-
-        
-        // 
         console.log(userIngredientList);
 
     }
@@ -191,8 +201,6 @@ export default function CreateRecipes() {
                     </div>
                 </form>
                 <form className="ingredients_input" onSubmit={submitHandler}>
-
-                    <legend>here</legend>
                     <div>
                         <label className="ingredients">Ingredients: </label>
                         {/* <input type="text" name="ingredients" onChange={handleSearch}></input> */}
