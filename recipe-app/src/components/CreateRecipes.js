@@ -1,5 +1,5 @@
 import {useEffect} from "react"
-import {useState} from "react/cjs/react.development"
+import {useState} from "react"
 import Navbar from "./Navbar"
 import axios from "axios"
 import AsyncSelect from "react-select/async";
