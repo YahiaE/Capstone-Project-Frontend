@@ -15,8 +15,7 @@ export default function RecipePage() {
         async function fetchData() {
             const { data } = await axios.get(`https://capstone-project-ttp.herokuapp.com/recipe/${id}`)
             setRecipeInfo(data)
-            console.log("rec" + data)
-            
+            console.log("rec" + data)         
         }
         fetchData().then(() => console.log("Data Fetched"))
     },[]);
