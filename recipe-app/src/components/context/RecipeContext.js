@@ -73,7 +73,7 @@ function ingredientsReducer(ingredients, action) {
 
 async function addRecipe(recipe) {
     try {
-        await axios.post('http://localhost:3001/recipe/addRecipe', recipe);
+        await axios.post('https://capstone-project-ttp.herokuapp.com/recipe/addRecipe', recipe);
     } catch (e) {
         alert("Error adding recipe")
     }
@@ -81,7 +81,7 @@ async function addRecipe(recipe) {
 
 async function removeRecipe(id) {
     try {
-        await fetch('http://localhost:3001/recipe/remove/' + id, { method: 'DELETE' });
+        await fetch('https://capstone-project-ttp.herokuapp.com/recipe/remove/' + id, { method: 'DELETE' });
 
     } catch (e) {
         console.log("Removing recipe...")
@@ -92,7 +92,7 @@ async function removeRecipe(id) {
 async function addIngredients(ingredient) {
     console.log(ingredient)
     try {
-        await axios.post('http://localhost:3001/recipe_items/addIngredients', ingredient)
+        await axios.post('https://capstone-project-ttp.herokuapp.com/recipe_items/addIngredients', ingredient)
     } catch (e) {
         alert("Error adding ingredient")
     }
@@ -110,7 +110,7 @@ function RecipeAPIProvider({children}) {
     useEffect(async () => {
 
         try {
-            await axios.get('http://localhost:3001/recipe/').then(val => {
+            await axios.get('https://capstone-project-ttp.herokuapp.com/recipe/').then(val => {
                 response = val.data
                 change = false
                 dispatch({type: ACTIONS.INITIALIZE, payload: response})

@@ -78,7 +78,7 @@ export default function CreateRecipes() {
     }, [change])
 
     useEffect(async () => {
-        await axios.get(`http://localhost:3001/recipe/GetRecent`).then(val => setRecipeId(val.data.id))
+        await axios.get(`https://capstone-project-ttp.herokuapp.com/recipe/GetRecent`).then(val => setRecipeId(val.data.id))
         setRecipeId(recipeId => {
             return recipeId
         });

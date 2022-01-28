@@ -13,7 +13,7 @@ export default function RecipePage() {
 
     useEffect(() => {
         async function fetchData() {
-            const { data } = await axios.get(`http://localhost:3001/recipe/${id}`)
+            const { data } = await axios.get(`https://capstone-project-ttp.herokuapp.com/recipe/${id}`)
             setRecipeInfo(data)
             console.log("rec" + data)
             
@@ -23,7 +23,7 @@ export default function RecipePage() {
 
     useEffect(() => {
         async function fetchData() {
-            const ing = await axios.get(`http://localhost:3001/recipe_items/list/${id}`)
+            const ing = await axios.get(`https://capstone-project-ttp.herokuapp.com/recipe_items/list/${id}`)
             setIngredientInfo(ing.data)
 
         }

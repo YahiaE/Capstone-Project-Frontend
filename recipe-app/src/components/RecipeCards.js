@@ -16,7 +16,7 @@ export default function RecipeCards(props) {
 
     useEffect(() => {
         const getRecipes = async () => {
-            const data = await axios.get("http://localhost:3001/recipe")
+            const data = await axios.get("https://capstone-project-ttp.herokuapp.com/recipe")
 
             if(props.isRecent){
                 if(data.data.length >= 4){
