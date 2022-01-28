@@ -86,10 +86,11 @@ export default function CreateRecipes() {
 
     //submit handler for add ingredients button
     function submitHandler(e) {
-        setAmount(e.target[1].value)
         e.preventDefault()
+        setAmount(e.target[1].value)
         e.target[1].value = ""
         setChange(prev => !prev)
+        console.log("Hi");
     }
 
     //Submitting a recipe
@@ -160,27 +161,27 @@ export default function CreateRecipes() {
                 <form className="myForm" onSubmit={recipeSubmit}>
                     <div className="input_div">
                         <label className="name_txt">Recipe Name: </label>
-                        <input className="recipe_name_box" type="text" name="name"></input>
+                        <input className="recipe_name_box" type="text" name="name" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}></input>
                     </div>
                     <div className="input_div">
                         <label className="description_text">Description: </label>
                         <textarea className="description_box" type="text" name="description"></textarea>
                     </div>
                     <div className="input_div">
-                        <label>Diffuculty Level: </label>
-                        <input className="diiffuculty_box" type="text" name="level_of_diff"></input>
+                        <label>Difficulty Level: </label>
+                        <input className="diiffuculty_box" type="text" name="level_of_diff" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}></input>
                     </div>
                     <div className="input_div">
                         <label>Time: </label>
-                        <input className="time_box" type="text" name="time"></input>
+                        <input className="time_box" type="text" name="time" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}></input>
                     </div>
                     <div className="input_div">
                         <label>Steps: </label>
-                        <input className="steps_box" type="text" name="steps"></input>
+                        <textarea  className="steps_box" type="text" name="steps"></textarea >
                     </div>
                     <div className="input_div">
                         <label>Image Link </label>
-                        <input className="image_box" type="text" name="image"></input>
+                        <input className="image_box" type="text" name="image" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}></input>
                     </div>
                     <div className="input_div">
                         <input className="submitBtn" type="submit" value="Submit"></input>

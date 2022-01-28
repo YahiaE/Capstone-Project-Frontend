@@ -60,7 +60,7 @@ return (
                                         </div>
                                         <div className="timeFlex">
                                             <img className="timer" src={timer}  />
-                                            <p >{item.time}</p>
+                                            <div class="timeText"><p>{item.time}</p></div>
                                             <button key={item.id} className="delete" onClick={() => {
                                                 dispatch({type: ACTION.REMOVE, payload: item.id})
                                                 window.location.reload(false);

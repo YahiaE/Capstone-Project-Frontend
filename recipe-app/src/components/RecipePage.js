@@ -16,6 +16,7 @@ export default function RecipePage() {
             const { data } = await axios.get(`http://localhost:3001/recipe/${id}`)
             setRecipeInfo(data)
             console.log("rec" + data)
+            
         }
         fetchData().then(() => console.log("Data Fetched"))
     },[]);
@@ -29,14 +30,19 @@ export default function RecipePage() {
         fetchData().then(() => console.log("Data Fetched"))
     },[recipeInfo]);
 
+
+    
+
     console.log(ingredientInfo)
 
     return (
+        
         <div className="recipe_container">
             <Navbar />
             <div className="topPage">
                 <div className="topBar" >
                     <h1>{recipeInfo.name}</h1>
+                    <h3 className="test2"><em>{recipeInfo.description}</em></h3>
                 </div>
                 <div className="under_header_box">
                     <img className="timerRecipe" src={timer} />
@@ -52,7 +58,7 @@ export default function RecipePage() {
                         <img className="pageImg" src={recipeInfo.img} />
                     </div>
                     <div className="rightSide" >
-                        <h2 className="test2">{recipeInfo.description}</h2>
+                        
                         <h3>Ingredients</h3>
                         <div className="list_box">
                             <ul className="listItem">
